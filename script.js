@@ -18,16 +18,18 @@ const materias = {
     { nombre: "Gráfica Computacional I", requiere: ["Computación Básica"] },
     { nombre: "Dibujo Artístico", requiere: [] },
     { nombre: "Fotografía", requiere: [] },
-    { nombre: "Tecnología para el Diseño II", requiere: ["Tecnología para el Diseño I"] },
+    { nombre: "Tecnología para el Diseño I", requiere: ["Tecnología para el Diseño I"] },
   ],
-  "3": [
-    { nombre: "Taller de Diseño III", requiere: ["Taller de Diseño II"] },
-    { nombre: "Teoría y Metodología Aplicada II", requiere: [] },
-    { nombre: "Teoría y Comunicación II", requiere: [] },
-    { nombre: "Publicidad y Marketing", requiere: ["Fotografía"] },
-    { nombre: "Diseño y Medio Ambiente", requiere: ["Historia II"] },
-    { nombre: "Gráfica Computacional II", requiere: ["Gráfica Computacional I"] },
-  ],
+  "3":
+    [
+  { nombre: "Taller de Diseño III", requiere: ["Taller de Diseño II"] },
+  { nombre: "Teoría y Metodología Aplicada II", requiere: [] },
+  { nombre: "Teoría y Comunicación II", requiere: [] },
+  { nombre: "Publicidad y Marketing", requiere: ["Fotografía"] },
+  { nombre: "Diseño y Medio Ambiente", requiere: ["Historia II"] },
+  { nombre: "Gráfica Computacional II", requiere: ["Gráfica Computacional I"] },
+  { nombre: "Tecnología para el Diseño II", requiere: ["Tecnología para el Diseño I"] }
+    ],
   "4": [
     { nombre: "Taller de Diseño IV", requiere: ["Taller de Diseño III"] },
     { nombre: "Teoría y Metodología Aplicada III", requiere: [] },
