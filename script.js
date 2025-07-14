@@ -34,22 +34,69 @@ const materias = {
     { nombre: "Teoría y Comunicación III", requiere: [] },
     { nombre: "Psicología del Mensaje Visual", requiere: ["Teoría y Comunicación II"] },
     { nombre: "Gestión de Proyectos", requiere: ["Publicidad y Marketing"] },
-    { nombre: "Tipografía", requiere: ["Taller de Diseño III"] }  // Añadida aquí
+    { nombre: "Tipografía", requiere: ["Taller de Diseño III"] }
   ],
   "5": [
-    { nombre: "Modalidad de Titulación (Proyecto/Tesis)", requiere: ["Taller de Diseño IV", "Psicología del Mensaje Visual", "Gestión de Proyectos"] },
-  ],
+    {
+      nombre: "Taller de Diseño V",
+      requiere: [
+        "Taller de Diseño IV",
+        "Teoría y Metodología Aplicada III",
+        "Teoría y Comunicación III",
+        "Psicología del Mensaje Visual",
+        "Gestión de Proyectos",
+        "Tipografía"
+      ]
+    },
+    {
+      nombre: "Modalidad de Titulación (Proyecto/Tesis)",
+      requiere: ["Taller de Diseño IV", "Psicología del Mensaje Visual", "Gestión de Proyectos"]
+    }
+  ]
 };
 
-function cargarNivel(nivel) {
+let materiasAprobadas = [];
+
+function guardarEstado() {
+  localStorage.setItem('materiasAprobadas', JSON.stringify(materiasAprobadas));
+}
+
+function cargarEstado() {
+  const data = localStorage.getItem('materiasAprobadas');
+  if (data) materiasAprobadas = JSON.parse(data);
+}
+
+function estaHabilitada(materia) {
+  return (materia.requiere.length === 0 || materia.requiere.every(req => materiasAprobadas.includes(req)));
+}
+
+function renderNivel(nivel) {
   const contenedor = document.getElementById("contenedor");
   contenedor.innerHTML = "";
   materias[nivel].forEach(mat => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<strong>${mat.nombre}</strong>` +
+    const div = document.createElement("div");
+    const esAprobada = materiasAprobadas.includes(mat.nombre);
+    const habilitada = estaHabilitada(mat);
+
+    div.className = "card";
+    if (!habilitada && !esAprobada) div.classList.add("locked");
+    if (esAprobada) div.classList.add("aprobada");
+
+    div.innerHTML = `<strong>${mat.nombre}</strong>` +
       (mat.requiere.length ? `<div class="requiere">Requiere: ${mat.requiere.join(", ")}</div>` : "");
-    contenedor.appendChild(card);
+
+    div.onclick = () => {
+      if (!habilitada && !esAprobada) return;
+      if (esAprobada) {
+        materiasAprobadas = materiasAprobadas.filter(m => m !== mat.nombre);
+      } else {
+        materiasAprobadas.push(mat.nombre);
+      }
+      guardarEstado();
+      renderNivel(nivel);
+    };
+
+    contenedor.appendChild(div);
   });
 
   document.querySelectorAll("button").forEach(b => b.classList.remove("active"));
@@ -62,10 +109,11 @@ function crearNav() {
     const btn = document.createElement("button");
     btn.id = `btn${i}`;
     btn.innerText = `Nivel ${i}`;
-    btn.onclick = () => cargarNivel(i.toString());
+    btn.onclick = () => renderNivel(i.toString());
     nav.appendChild(btn);
   }
 }
 
+cargarEstado();
 crearNav();
-cargarNivel("1");
+renderNivel("1");
