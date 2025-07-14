@@ -42,16 +42,12 @@ const materias = {
       nombre: "Taller de Diseño V",
       requiere: [
         "Taller de Diseño IV",
-        "Teoría y Metodología Aplicada III",
+        "Teoría y Metodología III",
         "Teoría y Comunicación III",
         "Psicología del Mensaje Visual",
         "Gestión de Proyectos",
         "Tipografía"
       ]
-    },
-    {
-      nombre: "Modalidad de Titulación (Proyecto/Tesis)",
-      requiere: ["Taller de Diseño IV", "Psicología del Mensaje Visual", "Gestión de Proyectos"]
     }
   ]
 };
